@@ -21,15 +21,15 @@
 NAME=pulsar
 
 start() {
-  screen -S pulsar-jackd -dm jackd -d alsa -C hw:1,0 -P hw:1,0
+  screen -m - -S pulsar-jackd -dm jackd -d alsa -C hw:1,0 -P hw:1,0
   sleep 2
-  screen -S pulsar-a2jmidid -dm a2jmidid -u
+  screen -m - -S pulsar-a2jmidid -dm a2jmidid -u
   sleep 2
-  screen -S pulsar-aubio aubiotrack -vjm
+  screen -m - -S pulsar-aubio aubiotrack -vjm
   sleep 2
   jack_connect system:capture_1 aubio:in_1
   jack_connect aubio:midi_out_1 "a2j:Midi Through (playback): Midi Through Port-0"
-  jack_connect aubio:out_1 system:playback_8
+  jack_connect aubio:out_1 system:playback_1
 }
 
 stop() {
